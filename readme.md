@@ -1,14 +1,14 @@
 # Project: Simple Point Of Sale System
 
 ## Latest Release
-MS1 
+MS2 
 
 ### Milestones
 
 |Milestone| Revision | Approximate<br />Workload (days) | Overview | Comments |
 |------|:---:|:----:|:----|:----| 
-| [MS1](#milestone-1) | V0.9 | 5 |   |  |
-| [MS2](#milestone-2) |  | 9|   |  |
+| [MS1](#milestone-1) | V0.9 | 5 | [Watch](https://youtu.be/2OWD-szjMIw)  |  |
+| [MS2](#milestone-2) | V1.0 | 9|  [Watch](https://youtu.be/A9a4i5TChAc) |  |
 | [MS3](#milestone-3) |  | 10|   |  |
 | [MS4](#milestone-4) |  | 4 |  |  |
 | [MS5](#milestone-5) |  | 14 | |  |
@@ -223,7 +223,7 @@ Running listItems()
 
 ##### Mockup methods:
 
-Create the following 7 methods that only print `Running ` and their names.
+Create the following 7 methods that only print `Running` and their names.
 
 1. addItem()
 2. removeItem()
@@ -233,8 +233,7 @@ Create the following 7 methods that only print `Running ` and their names.
 6. saveRecs()
 7. loadRecs()
 
-
-##### Construction 
+##### Construction
 
 `PosApp` is created by receiving the name of a file that is stored in character cString with a maximum length of 255 characters.
 
@@ -310,14 +309,232 @@ and follow the instructions.
 ## [Back to milestones](#milestones)
 
 # Milestone 2
+Start the second milestone by creating a general header file for the constant values needed throughout the development of the project. 
 
-> :construction: under construction
+The name of this file is `POS.h`
+
+Add the following constant values:
+```text
+TAX: 0.13
+MAX_SKU_LEN: 7
+
+MIN_YEAR: 2000
+MAX_YEAR: 2030
+
+MAX_STOCK_NUMBER: 99
+MAX_NO_ITEMS: 2000
+```
+We may add more values to this header file later. If you need any constant value for your code, add it here.
+
+## The Error Class
+
+Create a class called Error. This class will be used as a smart flag in our future classes to keep track of the erroneous state of the object and the error message associated with it. 
+
+The Error class has only a character pointer as an attribute that holds the description of the error (the error message) in a dynamic C-string. (We will call this pointer the **error message pointer** from now on).
+
+> Note: naturally if the error message pointer is null, then the object is in a  **No Error** state and if the error message is not null, then there is an error and the description of the Error is pointed by the error message.
+
+### Error Construction
+- The Error class by default is in a "No Error" state. (its pointer is null) 
+- The Error class can also get created using an error message (a C-string). In this case, the Error object will be in an erroneous state.
+
+### Rule of three
+The Error class can be copied and assigned to another Error object safely and must get destructed with no memory leak.
+
+### Mandatory Operations
+#### Assignment to a C-string.
+An Error object should be able to be assigned to a C-string. This will set the error message to the content of the C-string dynamically or nullptr if the C-String is null or empty. 
+
+#### boolean type conversion
+If an Error object is casted to a **bool**, it should return true if the message is not null and false if it is null. 
+```C++
+  Error err;
+  ...
+  ...
+  if(err){
+      // there is an error
+  }
+  else{
+      // there is no error
+  }
+```
+#### `clear()` 
+This method clears the error message and returns the reference of the current Error object. After this, the Error object should be in an "no Error" state with the message set to nullptr;
+
+#### ostream insertion
+The Error message should be able to be inserted into an ostream object using the **operator<<**. If the Error object is not in an error state nothing will be inserted into the ostream object.
+> DO NOT use *friend* to implement this.
+
+### Other Methods and operation
+Implement and add any other method or operations you find necessary to accomplish the above tasks (make them private if they don't need to be publicly accessible)
+
+## the Date class
+### attributes
+- The date class encapsulates date and time properties in five integer attributes (year, month, day, hour and minute).
+- Date also has a flag for using date only (no hour or minutes)
+- Finally, Date has an Error attribute to keep track of the success of operations. 
+
+### Date validation process
+During the implementation of the Date class whenever validation is needed the attributes of the date are all checked in the following order and the Error object is set to the corresponding error message stated below. 
+
+#### Date values
+The valid range of values for the year is defined in `POS.h`. Month values are between 1 and 12 and day values are between 1 and the return value of the [daysOfMonth ](#number-of-days-in-the-month-based-on-leap-year-calculation) function
+#### Time values
+The valid range for time value is 0 t 23 for the hour and  0 to 59 for the minute.
+
+#### Validation Sequence
+> Note that as soon as a validation fails, the Error object is set, and the rest of the validations will not take place
+
+1. If the year is invalid, then the Error object is set to `"Invalid Year"`
+2. If the month is invalid, then the Error object is set to `"Invalid Month"`
+3. If the day is invalid, then the Error object is set to `"Invalid Day"`
+4. If the hour is invalid, then the Error object is set to `"Invalid Hour"`
+5. If the minute is invalid, then the Error object is set to `"Invalid Minute"`
+
+### Already implemented utility functions
+The following functions are already implemented to help you with implementing different functionalities in the Date class.
+Use them (or their logic) wherever you find fit or necessary.
+
+#### system date and time
+The following function retrieves the current date and time of the system and returns them through the argument list.
+```C++
+#define _CRT_SECURE_NO_WARNINGS
+#include <ctime>
+   void getSystemDate(int& year, int& mon, int& day, int& hour, int& min, bool dateOnly) {
+      time_t t = time(NULL);
+      tm lt = *localtime(&t);
+      day = lt.tm_mday;
+      mon = lt.tm_mon + 1;
+      year = lt.tm_year + 1900;
+      if(dateOnly) {
+         hour = min = 0;
+      } else {
+         hour = lt.tm_hour;
+         min = lt.tm_min;
+      }
+   }
+```
+#### Unique Date and Time integer value retrieval
+The following function assigns a unique integer value to a date-time value. Using this value you can compare two dates. (i.e if the unique value of one date is greater than the unique value of another date, then the first date is larger than the second one)
+```C++
+   int uniqueDateValue(int year, int mon, int day, int hour, int min) {
+      return year * 535680 + mon * 44640 + day * 1440 + hour * 60 + min;
+   }
+```
+#### Number of days in the month based on leap year calculation
+To find out what is the maximum valid value for a calendar day in a month you can use this function. This function gets the year and the month and gives you the correct value for the number of days in that month (considering the leap year).
+```C++
+   int daysOfMonth(int year, int month){
+      int days[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31, -1 };
+      int mon = month >= 1 && month <= 12 ? month : 13;
+      mon--;
+      return days[mon] + int((mon == 1) * ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0));
+   }
+```
+### Date Construction
+- By default date is created and set to the current system date and will be set not to be date-only (it will include the hour and the minute)
+- A date can get created by receiving the date; (year, month and day values only). In this case, the Date object will be set to date-only mode. After the attributes are set, they are [validated](#date-validation-process). 
+- A date can get created using date and time; (year, month, day, hour and minute). In this case, the Date object will not be set to date-only mode. After the attributes are set, they are [validated](#date-validation-process).
+
+### Comparison Operator Overloads
+Overload all the comparison operator overloads to compare two date objects and return a boolean.
+
+`(==, != , < , > , <= , >=)`
+
+Make sure the references and methods are constant if they don't change the state of their objects and classes. 
+
+### dateOnly Modifier method
+Create a method called `dateOnly` that receives a boolean and returns the reference of the current date class. 
+
+This method should set the date-only flag to the value received from the argument of the function. However, if the function argument is "true" which sets the object to date only, then the hour and minute attributes of the date should be set to zero.
+
+In any case, the reference of the current object is returned.
+
+### boolean type conversion operator
+Overload the bool type conversion operator and return the opposite of the state of the error attribute. 
+
+### the error query
+Create a method called `error` that returns a constant reference of the error attribute object. This query does not change the state of the Date class.
+
+### Other Methods and operation
+Implement and add any other method or operations you find necessary to accomplish the above tasks (make them private if they don't need to be publicly accessible)
+
+### ostream insertion operator overload
+Overload the insertion operator to insert a Date into the ostream object. the result of the insertion should be as follows:
+
+#### If the Date is not in an erroneous state
+If the Date is in the date-only more, print the date in the following format: `YYYY/MM/DD`<br />
+If the Date is not in the date-only mode, print the date and time in the following format: `YYYY/MM/DD, HH:MM`
+#### if the Date is in an erroneous state
+Insert the error attribute into ostream to print the error message held in the error attribute then print the date and time exactly as shown before but surrounding them with parenthesis.
+```C++
+Date A(2023,10,20);
+Date B(2023,10,20,14,30);
+Date C(2023,10,20,26,72);
+
+cout << A << endl << B << endl << C << endl;
+/* output:
+2023/10/20
+2023/10/20, 14:30
+Invalid Hour(2023/10/20, 26:72)
+*/
+```
+> DO NOT use friend to implement this. implement member functions to access the data instead.
+
+### istream extraction operator overload
+Overload the extraction operator to read a date from istream in the same format it is printed.
+
+First, clear the error object to make sure the date is not in an erroneous state and set all the date and time attributes to zero.
+
+Then read the date values by reading the five integers (if date and time) or the three integers (if date only), and ignoring the delimiters in the data entry. 
+
+Note that you do not need to verify the delimiters to be exactly what the printed format is. 
+
+For example, the following three date Entries are all valid:
+
+```text
+2023/10/20, 26:72  <<- date and time
+2023-10-20*26-72   <<- date and time
+2023_10_20         <<- date only
+```
+After reading each integer, check the status of istream, if it is not in a fail state, ignore the next character and read the next integer. If the istream is in a fail state, set the error object to the corresponding error message (see below) and skip the rest of the entries.  If all the integers were read successfully [validate](#date-validation-process) the date values. 
+
+#### Error messages for istream failure
+
+```text
+"Cannot read year entry"
+"Cannot read month entry"
+"Cannot read day entry"
+"Cannot read hour entry"
+"Cannot read minute entry"
+```
+
+##### Exmaple
+
+```text
+2023/10/abc, 20:20
+The Error message should be set to "Cannot read day entry" and extration is stopped having istream left in error sate
+```
+
+> Note if the Date is in read-only mode, after reading the three date integers, set hour and minute to zero.
+
+In any case, at the end return the reference of istream.
+
+## tester programs
+Check each state of your program with the following testers. The main tester at submission combines all these tests.
+
+- <a href="MS2/01-ErrorTester.cpp" target="_blank">01-ErrorTester.cpp</a> - <a href="MS2/01-output.txt" target="_blank">output</a>
+- <a href="MS2/02-constantValueTests.cpp" target="_blank">02-constantValueTests.cpp</a> - <a href="MS2/02-output.txt" target="_blank">output</a>
+- <a href="MS2/03-DateConstructorTests.cpp" target="_blank">03-DateConstructorTests.cpp</a> - <a href="MS2/03-output.txt" target="_blank">output</a>
+- <a href="MS2/04-DateLogicalOperators.cpp" target="_blank">04-DateLogicalOperators.cpp</a> - <a href="MS2/04-output.txt" target="_blank">output</a>
+- <a href="MS2/05-DateValidation.cpp" target="_blank">05-DateValidation.cpp</a> - <a href="MS2/05-output.txt" target="_blank">output</a>
+
 
 ## MS2 Submission 
 
 > If you would like to successfully complete the project and be on time, **start early** and try to meet all the due dates of the milestones.
 
-Upload your source code and the tester program to your `matrix` account. Compile and run your code using the `g++` compiler [as shown in the introduction](#compiling-and-testing-your-program) and make sure that everything works properly.
+Upload your source code and the tester programs to your `matrix` account. Compile and run your code using the `g++` compiler [as shown in the introduction](#compiling-and-testing-your-program) and make sure that everything works properly.
 
 Then, run the following command from your account (replace `profname.proflastname` with your professor’s Seneca userid):
 ```
