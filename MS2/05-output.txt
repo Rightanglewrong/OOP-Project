@@ -26,8 +26,8 @@ Data in file:  2000/1/1, 25:10
 Correctly detected Invalid Hour
 Minute validation,
 Data in file:  2000/1/1, 23:60
-> Read From file:  Invlid Minute(2000/01/01, 23:60)
-Correctly detected Invlid Minute
+> Read From file:  Invalid Minute(2000/01/01, 23:60)
+Correctly detected Invalid Minute
 Testing istream read failure detection...
 Invalid year entry
 Data In file: abcd
