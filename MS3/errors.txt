@@ -1,0 +1,4 @@
+Item.cpp: In member function ‘virtual std::ifstream& sdds::Item::load(std::ifstream&)’:
+Item.cpp:316:14: warning: variable ‘flag’ set but not used [-Wunused-but-set-variable]
+         bool flag = true;
+              ^

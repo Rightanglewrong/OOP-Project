@@ -1,0 +1,115 @@
+Script started on Tue 04 Apr 2023 03:31:11 PM EDT
+==124548== Memcheck, a memory error detector
+==124548== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==124548== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==124548== Command: ms
+==124548== 
+>>>> NonPerishable Test----------------------------------------------------
+>>>> LIST------------------------------------------------------------------
+9318   |Tide Detergent      |  16.99| X |  10|   191.99|     N / A   |
+3456   |Bic Pen(Blue)       |   1.49| X |  80|   134.70|     N / A   |
+3456   |Paper Cups          |   5.99| X |  38|   257.21|     N / A   |
+1313   |Paper Tissue        |   1.22| X |  94|   129.59|     N / A   |
+1301   |Vitamin D3          |  12.99| X |  30|   440.36|     N / A   |
+1302   |Birthday Cards      |   5.99| X |  50|   338.44|     N / A   |
+>>>> FORM------------------------------------------------------------------
+=============v
+Name:        Tide Detergent
+Sku:         9318
+Price:       16.99
+Price + tax: 19.20
+Stock Qty:   10
+=============^
+=============v
+Name:        Bic Pen(Blue)
+Sku:         3456
+Price:       1.49
+Price + tax: 1.68
+Stock Qty:   80
+=============^
+=============v
+Name:        Paper Cups
+Sku:         3456
+Price:       5.99
+Price + tax: 6.77
+Stock Qty:   38
+=============^
+=============v
+Name:        Paper Tissue
+Sku:         1313
+Price:       1.22
+Price + tax: 1.38
+Stock Qty:   94
+=============^
+=============v
+Name:        Vitamin D3
+Sku:         1301
+Price:       12.99
+Price + tax: 14.68
+Stock Qty:   30
+=============^
+=============v
+Name:        Birthday Cards
+Sku:         1302
+Price:       5.99
+Price + tax: 6.77
+Stock Qty:   50
+=============^
+>>>> nonPerOutput.csv------------------------------------------------------
+N,9318,Tide Detergent,16.99,1,10
+N,3456,Bic Pen(Blue),1.49,1,80
+N,3456,Paper Cups,5.99,1,38
+N,1313,Paper Tissue,1.22,1,94
+N,1301,Vitamin D3,12.99,1,30
+N,1302,Birthday Cards,5.99,1,50
+
+>>>> Perishable Test-------------------------------------------------------
+Enter the following:
+Sku
+> 1111
+Name
+> Milk
+Price
+> 3.99
+Taxed ?
+(Y)es / (N)o : n
+Quantity
+> 10
+Expiry date(YYYY/MM/DD)
+> 2023/04/10
+
+Sku
+> 1111
+Name
+> Milk
+Price
+> 3.99
+Taxed?
+(Y)es/(N)o: n
+Quantity
+> 10
+Expiry date (YYYY/MM/DD)
+> 2023/04/10
+>>>> LIST------------------------------------------------------------------
+1111   |Milk                |   3.99|   |  10|    39.90| 2023/40/10 |
+>>>> FORM------------------------------------------------------------------
+=============v
+Name:        Milk
+Sku:         1111
+Price:       3.99
+Price + tax: N/A
+Stock Qty:   10
+Expiry date: 2023/40/10
+=============^
+>>>> perishableOutput.csv--------------------------------------------------
+P,1111,Milk,3.99,0,10,2023/04/10
+==124548== 
+==124548== HEAP SUMMARY:
+==124548==     in use at exit: 0 bytes in 0 blocks
+==124548==   total heap usage: 51 allocs, 51 frees, 129,154 bytes allocated
+==124548== 
+==124548== All heap blocks were freed -- no leaks are possible
+==124548== 
+==124548== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+Script done on Tue 04 Apr 2023 03:31:24 PM EDT

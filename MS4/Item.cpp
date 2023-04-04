@@ -1,5 +1,5 @@
 /*
-Final Project Milestone 3
+Final Project Milestone 4
 Module: Item
 Filename: Item.cpp
 Version 1.0
@@ -10,6 +10,7 @@ Revision History
 -----------------------------------------------------------
 Date        Reason
 2023/03/26  Preliminary release
+2023/04/04  Milestone 4 Release
 -----------------------------------------------------------
 I have done all the coding by myself and only copied the code
 that my professor provided to complete my project milestones.
@@ -165,7 +166,7 @@ namespace sdds
                 ostr << "|" << std::setw(7) << std::right << std::fixed << std::setprecision(2) << price << "|";
                 ostr << std::setw(3) << (taxed ? " X |" : "   |");
                 ostr << std::setw(4) << std::right << c_quantity << "|";
-                ostr << std::setw(9) << std::fixed << std::setprecision(2) << cost() * c_quantity << "|";
+                ostr << std::setw(9) << std::fixed << std::setprecision(2) << cost() * c_quantity << "|" << std::left;
             }
             else if (c_displayType == POS_FORM)
             {

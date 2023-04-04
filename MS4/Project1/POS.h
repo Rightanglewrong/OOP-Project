@@ -1,5 +1,5 @@
 /*
-Final Project Milestone 3
+Final Project Milestone 4
 Module: POS
 Filename: POS.h
 Version 1.1
@@ -11,6 +11,7 @@ Revision History
 Date        Reason
 2023/03/20  Preliminary release
 2023/03/26  Milestone 3 addition
+2023/04/04  Milestone 4 Release
 -----------------------------------------------------------
 I have done all the coding by myself and only copied the code
 that my professor provided to complete my project milestones.
