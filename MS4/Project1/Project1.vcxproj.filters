@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Date.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Error.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -27,13 +24,16 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Date.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PosIO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="NonPerishable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Perishable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PosIO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Utils.cpp">
@@ -65,5 +65,24 @@
     <ClInclude Include="Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="errors.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="nonPerInput.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="nonPerOutput.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="perishableInput.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="perishableOutput.csv">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

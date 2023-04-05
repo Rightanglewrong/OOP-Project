@@ -32,17 +32,18 @@ namespace sdds
 
     std::ostream &Perishable::write(std::ostream &ostr) const
     {
-        if (Item::err.getError() == nullptr)
+        // if (Item::err.getError() == nullptr)
+        if (*this)
         {
             Item::write(ostr);
-            if (Item::c_displayType == POS_LIST)
+            if (c_displayType == POS_LIST)
             {
-                ostr << std::setfill(' ') << " " << c_expiryDate << " |";
+                ostr << std::setfill(' ') << "  " << c_expiryDate << " |";
             }
             else
             {
-                ostr << "Expiry date: " << c_expiryDate << std::endl
-                     << "=============^" << std::endl;
+                ostr << "Expiry date: " << c_expiryDate << std::endl;
+                ostr << "=============^" << std::endl;
             }
         }
         return ostr;
@@ -50,6 +51,7 @@ namespace sdds
 
     std::istream &Perishable::read(std::istream &istr)
     {
+        Item::err.clear();
         Item::read(istr);
         if (istr.good())
         {
@@ -72,19 +74,19 @@ namespace sdds
 
     std::ifstream &Perishable::load(std::ifstream &ifstr)
     {
-        Item::load(ifstr);
-        if (ifstr.good())
+        if (!ifstr.fail() || Item::err.getError() == nullptr)
         {
-            Date expiryDate;
-            ifstr.ignore();
-            expiryDate.read(ifstr);
-            if (!expiryDate.operator bool())
+            Item::load(ifstr);
+            if (Item::err.getError() == nullptr)
             {
-                c_expiryDate = expiryDate;
-            }
-            else
-            {
-                Item::err = "Invalid date Entry";
+                c_expiryDate = Date();
+                c_expiryDate.dateOnly(true);
+                ifstr.ignore(1);
+                ifstr >> c_expiryDate;
+                if (ifstr.fail())
+                {
+                    err = c_expiryDate.error();
+                }
             }
         }
         return ifstr;

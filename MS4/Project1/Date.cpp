@@ -217,7 +217,8 @@ namespace sdds
         {
             ostr << err << "(";
         }
-        ostr << year << "/" << setfill('0') << setw(2) << month << "/" << setw(2) << day;
+        ostr << year << "/";
+        ostr << std::right << setfill('0') << std::setw(2) << month << "/" << setw(2) << day;
         if (!c_dateOnly)
         {
             ostr << ", " << setfill('0') << setw(2) << hour << ":" << setw(2) << minute;
@@ -226,6 +227,7 @@ namespace sdds
         {
             ostr << ")";
         }
+        ostr << setfill(' ') << std::left;
 
         return ostr;
     }

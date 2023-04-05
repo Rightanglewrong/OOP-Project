@@ -1,4 +1,0 @@
-Perishable.cpp: In member function ‘virtual std::ostream& sdds::Perishable::write(std::ostream&) const’:
-Perishable.cpp:39:25: error: ‘setfill’ is not a member of ‘std’
-                 ostr << std::setfill(' ') << " " << c_expiryDate << " |";
-                         ^

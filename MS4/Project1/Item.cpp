@@ -170,7 +170,7 @@ namespace sdds
             }
             else if (c_displayType == POS_FORM)
             {
-                ostr << "=============v" << std::endl;
+                ostr << std::setfill(' ') << "=============v" << std::endl;
                 ostr << std::setw(13) << std::left << "Name:" << name << std::endl;
                 ostr << std::setw(13) << std::left << "Sku:" << sku << std::endl;
                 ostr << std::setw(13) << std::left << "Price:" << price << std::endl;
@@ -247,8 +247,10 @@ namespace sdds
             std::cout << "> ";
             if (istr >> price)
             {
-                if (price > 0)
+                if (price > 0.0)
+                {
                     flag = false;
+                }
             }
             if (flag)
             {
@@ -312,7 +314,8 @@ namespace sdds
         return ofstr;
     }
 
-    std::ifstream& Item::load(std::ifstream& ifstr) {
+    std::ifstream &Item::load(std::ifstream &ifstr)
+    {
         char sk[255];
         char nam[255];
         double pric;
@@ -322,51 +325,61 @@ namespace sdds
         err.clear();
 
         ifstr.getline(sk, 255, ',');
-        if (strlen(sk) > MAX_SKU_LEN) {
+        if (strlen(sk) > MAX_SKU_LEN)
+        {
             err = ERROR_POS_SKU;
             return ifstr;
         }
 
         ifstr.getline(nam, 255, ',');
-        if (strlen(nam) > MAX_NAME_LEN) {
+        if (strlen(nam) > MAX_NAME_LEN)
+        {
             err = ERROR_POS_NAME;
             return ifstr;
         }
 
         ifstr >> pric;
-        if (ifstr.fail() || pric < 0) {
+        if (ifstr.fail() || pric < 0.0)
+        {
             err = ERROR_POS_PRICE;
             return ifstr;
         }
 
-        ifstr.ignore(); 
+        ifstr.ignore();
 
         ifstr.get(isTaxed);
-        if (isTaxed != '1' && isTaxed != '0') {
+        if (isTaxed != '1' && isTaxed != '0')
+        {
             err = ERROR_POS_TAX;
             return ifstr;
         }
-        
-        ifstr.ignore(); 
+
+        ifstr.ignore();
 
         ifstr >> quantity;
-        if (quantity <= 0 || quantity > MAX_STOCK_NUMBER) {
+        if (quantity < 1 || quantity > MAX_STOCK_NUMBER)
+        {
             err = ERROR_POS_QTY;
-            return ifstr;
+            // return ifstr;
         }
 
-        if (err.getError() == nullptr) {
+        if (err.getError() == nullptr)
+        {
             std::snprintf(sku, MAX_SKU_LEN, "%s", sk);
-            if (name) delete[] name;         // Free previous memory if any
-            name = new char[MAX_NAME_LEN];     // Allocate memory for m_name
+            if (name)
+                delete[] name;             // Free previous memory if any
+            name = new char[MAX_NAME_LEN]; // Allocate memory for m_name
             std::snprintf(name, MAX_NAME_LEN, "%s", nam);
             price = pric;
-            if (isTaxed == '1') taxed = true;
-            else taxed = false;
+            if (isTaxed == '1')
+                taxed = true;
+            else
+                taxed = false;
             c_quantity = quantity;
         }
 
-        else {
+        else
+        {
             std::cout << err.getError();
         }
         return ifstr;

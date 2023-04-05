@@ -1,9 +1,9 @@
-Script started on Tue 04 Apr 2023 02:46:48 PM EDT
-==114023== Memcheck, a memory error detector
-==114023== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==114023== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==114023== Command: ms
-==114023== 
+Script started on Tue 04 Apr 2023 03:31:11 PM EDT
+==124548== Memcheck, a memory error detector
+==124548== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==124548== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==124548== Command: ms
+==124548== 
 >>>> NonPerishable Test----------------------------------------------------
 >>>> LIST------------------------------------------------------------------
 9318   |Tide Detergent      |  16.99| X |  10|   191.99|     N / A   |
@@ -88,19 +88,28 @@ Taxed?
 (Y)es/(N)o: n
 Quantity
 > 10
-Expiry date (YYYY/MM/DD): 2023/04/10
-Invalid Expiry in Date Entry>>>> LIST------------------------------------------------------------------
-
+Expiry date (YYYY/MM/DD)
+> 2023/04/10
+>>>> LIST------------------------------------------------------------------
+1111   |Milk                |   3.99|   |  10|    39.90| 2023/40/10 |
 >>>> FORM------------------------------------------------------------------
+=============v
+Name:        Milk
+Sku:         1111
+Price:       3.99
+Price + tax: N/A
+Stock Qty:   10
+Expiry date: 2023/40/10
+=============^
 >>>> perishableOutput.csv--------------------------------------------------
+P,1111,Milk,3.99,0,10,2023/04/10
+==124548== 
+==124548== HEAP SUMMARY:
+==124548==     in use at exit: 0 bytes in 0 blocks
+==124548==   total heap usage: 51 allocs, 51 frees, 129,154 bytes allocated
+==124548== 
+==124548== All heap blocks were freed -- no leaks are possible
+==124548== 
+==124548== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
-==114023== 
-==114023== HEAP SUMMARY:
-==114023==     in use at exit: 0 bytes in 0 blocks
-==114023==   total heap usage: 52 allocs, 52 frees, 129,183 bytes allocated
-==114023== 
-==114023== All heap blocks were freed -- no leaks are possible
-==114023== 
-==114023== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-
-Script done on Tue 04 Apr 2023 02:47:05 PM EDT
+Script done on Tue 04 Apr 2023 03:31:24 PM EDT
