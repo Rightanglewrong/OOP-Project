@@ -1,0 +1,4 @@
+PosApp.cpp: In member function ‘std::ostream& sdds::PosApp::POS(std::ostream&)’:
+PosApp.cpp:455:16: error: ‘item’ was not declared in this scope
+         delete item;
+                ^

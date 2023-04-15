@@ -1,0 +1,25 @@
+/*
+Final Project Milestone 5
+Author	Benny Yang
+Student ID: 112654223
+Email: byang68@myseneca.ca
+-----------------------------------------------------------
+I have done all the coding by myself and only copied the code
+that my professor provided to complete my project milestones.
+-----------------------------------------------------------
+*/
+
+// Part 1
+For this milestone, I would just say that I realized that even though the code worked on the workshop it was meant for. When it came time to combining the code, I found that it did not interact the way it wanted. 
+
+// Part 2
+I thought this part was quite straight forward, I did not have much trouble implementing this function.
+
+// Part 3
+For this part of the milestone, I found the illustration to be difficult to understand but I understood what it was trying to convey at the end. The tip about changing listItems to take a bool was a good advice in making my code have less repetitive code.
+
+// Part 4
+This one was pretty similar to the implementation to part 3, so pretty easy to do.
+
+// Part 5
+ITS DONE, I mostly had formatting errors while doing this part and a few invalid reads when I tried to call some of the functions wrong.

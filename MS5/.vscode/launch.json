@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/snorting_rainbow/Dropbox/Mac/Documents/Seneca/OOP244NCC/OOP-Project/MS5",
+      "program": "/Users/snorting_rainbow/Dropbox/Mac/Documents/Seneca/OOP244NCC/OOP-Project/MS5/build/Debug/outDebug"
+    }
+  ]
+}
